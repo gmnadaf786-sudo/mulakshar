@@ -1,0 +1,227 @@
+<!doctype html><html lang='mr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>मुळाक्षर सराव</title></head><body style='margin:0;font-family:sans-serif'><button onclick='openMulakshar_()' style='margin:20px;padding:16px 24px;font-size:20px;font-weight:900'>▶ मुळाक्षर सराव उघडा</button><!-- ===== इयत्ता १ ली मराठी: मुळाक्षर वाचन-लेखन सराव (स्वतंत्र मॉड्यूल). openMulakshar_() बोलवा ===== -->
+<style>
+#mkModal{display:none;position:fixed;inset:0;z-index:100300;background:#fffaf0;flex-direction:column;color:#1f2937;font-family:inherit}
+#mkModal.open{display:flex}
+#mkApp{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}
+#mkApp *{box-sizing:border-box}
+.mk-h{background:#ef6c00;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.mk-h h2{margin:0;flex:1;font-size:20px;font-weight:900;line-height:1.25}
+.mk-h button{border:0;background:rgba(255,255,255,.25);color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;font-weight:900}
+.mk-sub{margin:12px 16px 4px;font-size:13px;font-weight:900;color:#92400e}
+.mk-li{display:flex;align-items:center;gap:12px;width:calc(100% - 32px);margin:10px 16px;padding:14px;border:0;border-radius:20px;background:#fff;box-shadow:0 2px 8px rgba(120,53,15,.18);text-align:left;font-size:20px;font-weight:900;color:#1f2937}
+.mk-no{flex:0 0 46px;height:46px;border-radius:50%;background:#e53935;color:#fff;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.mk-li small{display:block;font-size:12px;color:#78716c;font-weight:700;margin-top:2px}
+.mk-li .p{margin-left:auto;font-size:22px;color:#a8a29e}
+.mk-tabs{display:flex;background:#fb923c}
+.mk-tabs button{flex:1;padding:13px;border:0;background:transparent;color:#fff;font-weight:900;font-size:17px;border-bottom:4px solid transparent;opacity:.85}
+.mk-tabs button.on{border-bottom-color:#fff;opacity:1;background:rgba(255,255,255,.15)}
+.mk-cnt{text-align:center;margin:12px 0 4px;font-weight:900;color:#78716c}
+.mk-card{margin:8px 16px;padding:18px 12px;background:#fff;border-radius:24px;box-shadow:0 3px 12px rgba(120,53,15,.2);text-align:center}
+.mk-big{font-size:110px;line-height:1.25;font-weight:700;color:#1f2937;word-break:keep-all}
+.mk-big.w{font-size:68px}.mk-big.s{font-size:30px;line-height:1.6;font-weight:800}
+.mk-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 16px}
+.mk-b{border:0;border-radius:18px;padding:14px 20px;font-size:18px;font-weight:900;color:#fff;background:#2563eb}
+.mk-b.g{background:#16a34a}.mk-b.r{background:#dc2626}.mk-b.o{background:#ea580c}.mk-b.x{background:#e7e5e4;color:#44403c}
+.mk-b.listen{background:#0ea5e9}.mk-b.mic{background:#e11d48}
+.mk-b.rec{animation:mkp 1s infinite}
+@keyframes mkp{50%{transform:scale(1.07);box-shadow:0 0 0 8px rgba(225,29,72,.25)}}
+.mk-res{margin:8px 16px;padding:12px;border-radius:16px;text-align:center;font-size:18px;font-weight:900}
+.mk-res.ok{background:#dcfce7;color:#166534}.mk-res.no{background:#fee2e2;color:#991b1b}.mk-res.info{background:#fef3c7;color:#92400e;font-size:14px;font-weight:700}
+.mk-star{font-size:34px;letter-spacing:4px}
+.mk-nav{display:flex;gap:12px;margin:14px 16px}
+.mk-nav button{flex:1;padding:15px;border-radius:18px;border:2px solid #fdba74;background:#fff;font-size:18px;font-weight:900;color:#9a3412}
+.mk-nav button.pri{background:#ef6c00;border-color:#ef6c00;color:#fff}
+.mk-nav button:disabled{opacity:.4}
+.mk-cv{position:relative;margin:8px 16px;background:#fff;border-radius:20px;box-shadow:0 3px 12px rgba(120,53,15,.2);overflow:hidden;touch-action:none}
+.mk-cv canvas{display:block;width:100%;height:auto;touch-action:none}
+.mk-cv .ink{position:absolute;left:0;top:0}
+.mk-chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px}
+.mk-chips button{min-width:40px;height:40px;border-radius:12px;border:1.5px solid #fdba74;background:#fff;font-weight:900;font-size:17px;color:#7c2d12}
+.mk-chips button.on{background:#ef6c00;color:#fff;border-color:#ef6c00}
+.mk-chips button.d{background:#dcfce7;border-color:#16a34a;color:#166534}
+.mk-note{margin:12px 16px;padding:12px;background:#fff;border:1px solid #fed7aa;border-radius:14px;font-size:14px;line-height:1.5}
+</style>
+<div id="mkModal" aria-hidden="true"><div id="mkApp"></div></div>
+<script>
+(function(){
+var LES=[
+{no:9,t:'क म ल अ आ',L:['क','म','ल','अ','आ'],W:'कप कढई कुलूप कंगवा कैरी कलिंगड काकडी केळी कळी कणीस कपाळ सकाळ भाकरी बेडूक मका मगर मधमाशी मजा मामी मान मोर काम मासा मलम कमळ गरम मराठी मलमल लसूण पालक ढाल बैल पेला गाल लाडू मला वेल लांब लाल अननस अजगर अळी आजी आरसा आवळा आशा आकाश आसन आवाज'},
+{no:11,t:'घ र ब इ ई',L:['घ','र','ब','इ','ई'],W:'घरटे रवी बदक घर वार बरणी घार बगळा घास रजई बकरी घेवडा सरबत बटाटा इमारत ईडलिंबू इरा जुई इजा इतका सनई चटई इवली आमराई इतिहास मिरची काकी रिमा घरी कमी किलबिल लीला बिरबल'},
+{no:13,t:'न स प त उ ऊ',L:['न','स','प','त','उ','ऊ'],W:'नळ समई पतंग नाक पान काप भजन सई पपई पाय वानर परात नगर तराजू उशी पाऊस तवा उमा ऊस ताट उडी नऊ तबला उलट खाऊ'},
+{no:16,t:'च ळ ह झ ए',L:['च','ळ','ह','झ','ए'],W:'चाक चिकू चिमणी नळ माळ हात हरिण होडी झाडू झेंडू झोपडी एक एडका एरंड घेर पेन तेरा हेमा मेघा नेहा रताळे बेत तेल केस'},
+{no:18,t:'द ड व ग ऐ',L:['द','ड','व','ग','ऐ'],W:'दात नदी दरवाजा डबा डमरू वड वाघ विमान गाय गूळ गुलाब ऐक ऐवज ऐरण'},
+{no:20,t:'ध य फ ज श ओ',L:['ध','य','फ','ज','श','ओ'],W:'धरण धोतरा याक यान मध धडा साधना धाडसी धडधड समाधान साय उपाय यमुना कवायत विनायक फणस फळा जांभूळ जाते फळ फेस चाफा फीत फटाका फवारणी जग जाई जुलै जिना जनावर जहाज शेवगा शेतकरी ओढा ओढणी शूर शाई शेळी शहर केशव शिकार शनिवार शिकरण ओळ ओवा ओलावा ओसरी ओहोळ ओझेवाला झोका बोर जोड मोज सोबत कोकम'},
+{no:25,t:'ण ख थ भ औ',L:['ण','ख','थ','भ','औ'],W:'पणती खडू नथ फणी खजूर थवा औषध भुंगा भिंगरी औत भोवरा'},
+{no:27,t:'ट ढ ठ छ ष',L:['ट','ढ','ठ','छ','ष'],W:'टाळ वाटाणा ढोल टोपी वाटी टोपली टिकली टरबूज टरफल काढ ढग ढोकळा ढोलकी ठसा ठाम काठी ठेचा ठळक ठिकाण कठीण ठसठस ठणठण छत्री छत्र छडी छटा छंद छत छान छाया छावा छापा छकुली बछडा छावणी भाषा भाषण चषक विषय विशेष आषाढ'},
+{no:29,t:'क्ष ज्ञ ॲ ऑ अं अः ऋ',L:['क्ष','ज्ञ','ॲ','ऑ','अं','अः','ऋ'],W:'शिक्षक रिक्षा पक्षी क्षण क्षेत्र क्षार क्षमा साक्ष अक्षय दक्षता अक्षर शिक्षिका दक्षिण यज्ञ यज्ञेश ज्ञान आज्ञा विज्ञान ज्ञानदा ॲना बॅग कॅरम कॅमेरा ऑगस्ट कॉलेज कॉलर शॉवर अंतर अंधार अंबर अंश स्वतः शतशः उषःकाल अंशतः ऋषी ऋत्विक ऋतुजा ऋचा'},
+{no:31,t:'जोडाक्षरे',L:['स्त','म्ह','त्या','च्या','ड्या','ट्या','त्र','प्र','ष्ट्र','श्र','र्य'],W:'मस्त जास्त पुस्तक म्हण म्हणून म्हणजे त्याला आल्या कोणत्या मित्र पुत्र चित्रा मैत्री प्रकाश प्राण प्रश्न प्रदीप राष्ट्र राष्ट्रीय सौराष्ट्र राष्ट्रगीत श्रावण श्रम श्रोता विश्रांती सूर्य कार्य आर्यन सहकार्य'},
+{no:32,t:'सर्व मुळाक्षरे',L:'अ आ इ ई उ ऊ ऋ ए ऐ ओ औ अं अः क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह ळ क्ष ज्ञ'.split(' '),W:''}
+];
+LES.forEach(function(l){l.W=l.W?l.W.split(' '):[];});
+/* बाराखडी: व्यंजन + स्वरचिन्हे */
+var CONS='क ख ग घ च छ ज झ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह ळ'.split(' ');
+var MATRA=['ा','ि','ी','ु','ू','े','ै','ो','ौ','ं','ः'];
+var BARA=[];CONS.forEach(function(c){MATRA.forEach(function(m){BARA.push(c+m);});});
+LES.push({no:33,t:'बाराखडी',L:BARA,W:[]});
+var SENT=[
+{n:3,t:'वाचनपाठ ३',S:['आला आला पाऊस आला.','सरसर सरसर पाऊस आला.','काका, काकू पाऊस बघा.','कुमार, पूनम पाऊस बघा.','आला आला पाऊस आला.']},
+{n:5,t:'वाचनपाठ ५',S:['मुले सहलीला निघाली.','रवीही सहलीला निघाला.','आईने लाडू, चिवडा केला.','चपाती व उसळ केली.','गरम डबा दिला.','आवडीची कैरी दिली.','नगमा आली.','वैदेही आली.','सहलीची बस निघाली.']},
+{n:6,t:'वाचनपाठ ६',S:['जय व राज दोघे सोबती.','शाळेतून घरी आले.','दोघेही बागेत फिरायला गेले.','फळझाडे व फुलझाडे पाहिली.','फळे-फुले वेचून घेतली.','मधाचे पोळे पाहिले.','मोरही पाहिला.','आजचा दिवस मजेत गेला.']},
+{n:7,t:'वाचनपाठ ७',S:['सौरभची आजी जेवण बनवते.','चवदार भाजी करते.','मुगाची खिचडी करते.','पालकची भाजी करते.','नाचणीचे धिरडे करते.','डाळीचे वडे करते.','बाजरीची भाकरी खरपूस भाजते.','रुचकर चवीची थाळी सजते.']},
+{n:8,t:'वाचनपाठ ८',S:['शिरीषने ठोकळे जमवले.','काही चौरस काही आयत.','शिरीषने ढिगातून ठोकळे घेतले.','छान घर तयार केले.','इमारत केली.','शाळा केली.','नागमोडी वाट केली.','चढ उताराचा घाट केला.','असे छान ठोकळे रचले.']},
+{n:9,t:'वाचनपाठ ९',S:['ॲना भिलारला गेली.','सोबत टॉम होता.','भिलार म्हणजे पुस्तकांचे गाव.','गावात होती पुस्तकेच पुस्तके.','ॲनाने एक पुस्तक घेतले.','पुस्तकात खूप गोष्टी होत्या.','छान चित्रे होती.','ॲना वाचू लागली.','टॉम ऐकत होता.','वाचताना तिला मजा आली.','दोघेही खूश झाले.','त्यांना भिलार गाव आवडले.']}
+];
+
+  var S={view:'home',les:null,tab:'read',i:0,items:[],res:null,rec:false};
+  var LS='mk_p1';
+  function el(i){return document.getElementById(i);}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function num(n){return String(n).replace(/\d/g,function(d){return '०१२३४५६७८९'.charAt(d);});}
+  function prog(){try{return JSON.parse(localStorage.getItem(LS)||'{}');}catch(e){return {};}}
+  function saveProg(k,st){try{var p=prog();if((p[k]||0)<st){p[k]=st;localStorage.setItem(LS,JSON.stringify(p));}}catch(e){}}
+  var P_={};function pk(){return (S.view==='sent'?'s':'l')+'|'+S.les.no+'|'+(S.tab==='read'?'r':'w')+'|';}
+  /* ---------- आवाज (ऐका) ---------- */
+  function speak(t){
+    try{if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='mr-IN';u.rate=0.8;
+      var vs=speechSynthesis.getVoices()||[],v=vs.filter(function(x){return /^mr/i.test(x.lang);})[0]||vs.filter(function(x){return /^hi/i.test(x.lang);})[0];
+      if(v){u.voice=v;u.lang=v.lang;}speechSynthesis.speak(u);}catch(e){}
+  }
+  /* ---------- जुळवणी ---------- */
+  function norm(s){return String(s||'').replace(/[‌‍\s.,!?।'"‘’“”\-–]/g,'');}
+  function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i];}for(j=1;j<=n;j++)d[0][j]=j;
+    for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+  function sim(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;return 1-lev(a,b)/Math.max(a.length,b.length);}
+  function judge(target,alts){
+    var t=norm(target),best=0,exact=false,isSent=/\s/.test(String(target).trim());
+    alts.forEach(function(a){
+      if(norm(a)===t)exact=true;
+      var s;
+      if(isSent){var tw=String(target).split(/\s+/).map(norm).filter(Boolean),aw=String(a).split(/\s+/).map(norm).filter(Boolean),hit=0;
+        tw.forEach(function(w){if(aw.some(function(x){return sim(x,w)>=0.7;}))hit++;});s=tw.length?hit/tw.length:0;}
+      else if(t.length<=2){s=(norm(a).indexOf(t)>=0)?0.9:0;}
+      else s=sim(a,target);
+      if(s>best)best=s;});
+    var thr=isSent?0.75:(t.length<=2?0.8:0.72);
+    return {ok:exact||best>=thr,stars:exact||best>=0.92?3:(best>=thr?2:0),best:best};
+  }
+  /* ---------- माइक ---------- */
+  function listen(target){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR){S.res={t:'info',m:'या ब्राउझरमध्ये माइक तपासणी उपलब्ध नाही. शिक्षक "बरोबर/चूक" बटणाने ठरवावे.',manual:true};render();return;}
+    var r=new SR();r.lang='mr-IN';r.interimResults=false;r.maxAlternatives=5;r.continuous=false;
+    S.rec=true;S.res=null;render();
+    var done=false;
+    function fin(res){if(done)return;done=true;S.rec=false;S.res=res;render();}
+    r.onresult=function(e){
+      var alts=[];for(var i=0;i<e.results.length;i++)for(var j=0;j<e.results[i].length;j++)alts.push(e.results[i][j].transcript);
+      var j=judge(target,alts);
+      fin(j.ok?{t:'ok',m:'बरोबर!',stars:j.stars,heard:alts[0],manual:true,target:target}:{t:'no',m:'पुन्हा वाचा',heard:alts[0],manual:true,target:target});
+      if(j.ok)saveProg(pk()+target,j.stars);
+    };
+    r.onerror=function(e){
+      var m=(e.error==='not-allowed'||e.error==='service-not-allowed')?'माइकला परवानगी नाही. ब्राउझर/फोनमध्ये माइक परवानगी द्या.':(e.error==='no-speech'?'आवाज ऐकू आला नाही. पुन्हा प्रयत्न करा.':'माइक चालला नाही ('+e.error+').');
+      fin({t:'info',m:m,manual:true,target:target});
+    };
+    r.onend=function(){if(!done)fin({t:'info',m:'आवाज ऐकू आला नाही. पुन्हा प्रयत्न करा.',manual:true,target:target});};
+    try{r.start();}catch(e){fin({t:'info',m:'माइक सुरू करता आला नाही.',manual:true,target:target});}
+  }
+  window.mkMic_=function(){var t=S.items[S.i];if(S.rec)return;listen(t);};
+  window.mkSay_=function(){speak(S.items[S.i]);};
+  window.mkManual_=function(ok){var t=S.items[S.i];if(ok){saveProg(pk()+t,3);S.res={t:'ok',m:'बरोबर! (शिक्षकाने तपासले)',stars:3};}else S.res={t:'no',m:'पुन्हा वाचा'};render();};
+  /* ---------- नेव्हिगेशन ---------- */
+  window.openMulakshar_=function(){var m=el('mkModal');m.classList.add('open');m.setAttribute('aria-hidden','false');S.view='home';render();};
+  window.closeMulakshar_=function(){try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}var m=el('mkModal');m.classList.remove('open');m.setAttribute('aria-hidden','true');};
+  window.mkBack_=function(){if(S.view==='home')closeMulakshar_();else{S.view='home';render();}};
+  window.mkLes_=function(i){S.les=LES[i];S.view='les';S.tab='read';setItems();render();};
+  window.mkSent_=function(i){S.les=SENT[i];S.les.no=S.les.n;S.view='sent';S.tab='read';setItems();render();};
+  window.mkTab_=function(t){S.tab=t;S.i=0;S.res=null;render();};
+  window.mkGo_=function(d){S.i=Math.max(0,Math.min(S.items.length-1,S.i+d));S.res=null;render();};
+  window.mkJump_=function(i){S.i=i;S.res=null;render();};
+  function setItems(){S.i=0;S.res=null;S.items=S.view==='sent'?S.les.S.slice():S.les.L.concat(S.les.W);}
+  /* ---------- रेंडर ---------- */
+  function stars(n){return n?'<span class="mk-star">'+'⭐'.repeat(n)+'</span>':'';}
+  function render(){
+    var a=el('mkApp'),h='';
+    if(S.view==='home'){
+      var p=prog();
+      h='<div class="mk-h"><h2>इयत्ता १ ली • मराठी<br><small style="font-weight:700;font-size:13px">मुळाक्षर वाचन आणि लेखन सराव</small></h2><button type="button" onclick="mkBack_()">✕</button></div><div class="mk-sub">पाठ निवडा</div>';
+      LES.forEach(function(l,i){
+        var tot=l.L.length+l.W.length,done=0;l.L.concat(l.W).forEach(function(x){if(p['l|'+l.no+'|r|'+x])done++;});
+        h+='<button type="button" class="mk-li" onclick="mkLes_('+i+')"><span class="mk-no">'+num(l.no)+'</span><span>'+esc(l.t)+'<small>'+num(tot)+' घटक • वाचन ✔ '+num(done)+'</small></span><span class="p">▶</span></button>';
+      });
+      h+='<div class="mk-sub">वाक्य वाचन</div>';
+      SENT.forEach(function(s,i){h+='<button type="button" class="mk-li" onclick="mkSent_('+i+')"><span class="mk-no" style="background:#2563eb">'+num(s.n)+'</span><span>'+esc(s.t)+'<small>'+num(s.S.length)+' वाक्ये</small></span><span class="p">▶</span></button>';});
+    }else{
+      var it=S.items[S.i],isW=S.tab==='write',n=S.items.length;
+      h='<div class="mk-h"><button type="button" onclick="mkBack_()">‹</button><h2>'+esc(S.les.t)+'</h2><button type="button" onclick="closeMulakshar_()">✕</button></div>';
+      if(S.view==='les')h+='<div class="mk-tabs"><button type="button" class="'+(!isW?'on':'')+'" onclick="mkTab_(\'read\')">📖 वाचन</button><button type="button" class="'+(isW?'on':'')+'" onclick="mkTab_(\'write\')">✍️ लेखन</button></div>';
+      h+='<div class="mk-cnt">'+num(S.i+1)+' / '+num(n)+'</div>';
+      if(!isW){
+        var sz=S.view==='sent'?'s':(it.length>2?'w':'');
+        h+='<div class="mk-card"><div class="mk-big '+sz+'">'+esc(it)+'</div></div>';
+        h+='<div class="mk-btns"><button type="button" class="mk-b listen" onclick="mkSay_()">🔊 ऐका</button><button type="button" class="mk-b mic'+(S.rec?' rec':'')+'" onclick="mkMic_()">'+(S.rec?'🎤 ऐकत आहे...':'🎤 वाचा')+'</button></div>';
+        if(S.res){h+='<div class="mk-res '+S.res.t+'">'+(S.res.t==='ok'?'✅ ':S.res.t==='no'?'🔁 ':'ℹ️ ')+esc(S.res.m)+(S.res.stars?'<br>'+stars(S.res.stars):'')+(S.res.heard?'<br><small style="font-weight:700">ऐकले: '+esc(S.res.heard)+'</small>':'')+'</div>';
+          if(S.res.manual)h+='<div class="mk-btns"><button type="button" class="mk-b g" onclick="mkManual_(true)">✔ बरोबर वाचले</button><button type="button" class="mk-b x" onclick="mkManual_(false)">✖ पुन्हा</button></div>';}
+      }else{
+        h+='<div class="mk-cv" id="mkCv"><canvas id="mkG" width="640" height="320"></canvas><canvas id="mkI" class="ink" width="640" height="320"></canvas></div>';
+        h+='<div class="mk-btns"><button type="button" class="mk-b listen" onclick="mkSay_()">🔊 ऐका</button><button type="button" class="mk-b x" onclick="mkClear_()">🧽 पुसा</button><button type="button" class="mk-b g" onclick="mkCheck_()">✔ तपासा</button></div>';
+        h+='<div id="mkWR">'+(S.res?'<div class="mk-res '+S.res.t+'">'+esc(S.res.m)+(S.res.stars?'<br>'+stars(S.res.stars):'')+'</div>':'<div class="mk-note">ठिपक्यांच्या/हलक्या अक्षरावरून बोटाने गिरवा, मग "तपासा" दाबा.</div>')+'</div>';
+      }
+      h+='<div class="mk-nav"><button type="button" onclick="mkGo_(-1)"'+(S.i===0?' disabled':'')+'>‹ मागील</button><button type="button" class="pri" onclick="mkGo_(1)"'+(S.i>=n-1?' disabled':'')+'>पुढील ›</button></div>';
+      if(n>1&&n<=60){h+='<div class="mk-chips">'+S.items.map(function(x,i){var d=prog()[(S.view==='sent'?'s':'l')+'|'+S.les.no+'|'+(isW?'w':'r')+'|'+x];return '<button type="button" class="'+(i===S.i?'on ':'')+(d?'d':'')+'" onclick="mkJump_('+i+')">'+esc(S.view==='sent'?num(i+1):x)+'</button>';}).join('')+'</div>';}
+    }
+    var sc=a.scrollTop;a.innerHTML=h;a.scrollTop=(S.view==='home')?sc:0;
+    if(S.view!=='home'&&S.tab==='write')initCanvas();
+  }
+  /* ---------- लेखन (गिरवणे) ---------- */
+  var CW=640,CH=320,FONT='"Noto Sans Devanagari","Mukta","Nirmala UI","Lohit Devanagari",sans-serif';
+  var strokes=[],cur=null;
+  function fit(ctx,text){var px=250;ctx.font='700 '+px+'px '+FONT;var w=ctx.measureText(text).width;if(w>CW*0.9)px=Math.floor(px*CW*0.9/w);ctx.font='700 '+px+'px '+FONT;ctx.textAlign='center';ctx.textBaseline='middle';return px;}
+  function drawGuide(ctx,text,mode){fit(ctx,text);var y=CH/2+8;
+    if(mode==='show'){ctx.fillStyle='#d6d3d1';ctx.fillText(text,CW/2,y);ctx.setLineDash([6,8]);ctx.lineWidth=2;ctx.strokeStyle='#78716c';ctx.strokeText(text,CW/2,y);}
+    else if(mode==='fill'){ctx.fillStyle='#000';ctx.fillText(text,CW/2,y);}
+    else if(mode==='dil'){ctx.fillStyle='#000';ctx.fillText(text,CW/2,y);ctx.lineJoin='round';ctx.lineWidth=44;ctx.strokeStyle='#000';ctx.strokeText(text,CW/2,y);}
+  }
+  function initCanvas(){
+    strokes=[];cur=null;var g=el('mkG'),ink=el('mkI');if(!g)return;
+    var gc=g.getContext('2d');gc.clearRect(0,0,CW,CH);gc.fillStyle='#fff';gc.fillRect(0,0,CW,CH);
+    gc.strokeStyle='#e7e5e4';gc.lineWidth=1;gc.setLineDash([4,6]);gc.beginPath();gc.moveTo(0,CH*0.78);gc.lineTo(CW,CH*0.78);gc.moveTo(0,CH*0.22);gc.lineTo(CW,CH*0.22);gc.stroke();gc.setLineDash([]);
+    drawGuide(gc,S.items[S.i],'show');
+    function pos(e){var r=ink.getBoundingClientRect();return [(e.clientX-r.left)*CW/r.width,(e.clientY-r.top)*CH/r.height];}
+    var ic=ink.getContext('2d');
+    ink.onpointerdown=function(e){e.preventDefault();try{ink.setPointerCapture(e.pointerId);}catch(x){}cur=[pos(e)];strokes.push(cur);redraw();};
+    ink.onpointermove=function(e){if(!cur)return;e.preventDefault();cur.push(pos(e));redraw();};
+    ink.onpointerup=ink.onpointercancel=function(e){cur=null;};
+    ink.style.touchAction='none';
+  }
+  function strokePath(ctx,w,color){ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=w;ctx.strokeStyle=color;
+    strokes.forEach(function(s){ctx.beginPath();ctx.moveTo(s[0][0],s[0][1]);if(s.length===1)ctx.lineTo(s[0][0]+0.1,s[0][1]);for(var i=1;i<s.length;i++)ctx.lineTo(s[i][0],s[i][1]);ctx.stroke();});}
+  function redraw(){var ink=el('mkI');if(!ink)return;var c=ink.getContext('2d');c.clearRect(0,0,CW,CH);strokePath(c,12,'#2563eb');}
+  window.mkClear_=function(){strokes=[];cur=null;redraw();S.res=null;var w=el('mkWR');if(w)w.innerHTML='<div class="mk-note">पुन्हा गिरवा.</div>';};
+  function cnv(){var c=document.createElement('canvas');c.width=CW;c.height=CH;return c;}
+  function alphaOf(c){return c.getContext('2d').getImageData(0,0,CW,CH).data;}
+  window.mkCheck_=function(){
+    var text=S.items[S.i];
+    if(!strokes.length){S.res={t:'info',m:'आधी गिरवा, मग तपासा.'};var w=el('mkWR');if(w)w.innerHTML='<div class="mk-res info">आधी गिरवा, मग तपासा.</div>';return;}
+    var gm=cnv(),gx=gm.getContext('2d');drawGuide(gx,text,'fill');
+    var dm=cnv(),dx=dm.getContext('2d');drawGuide(dx,text,'dil');
+    var th=cnv(),tx=th.getContext('2d');strokePath(tx,36,'#000');
+    var tn=cnv(),nx=tn.getContext('2d');strokePath(nx,10,'#000');
+    var G=alphaOf(gm),D=alphaOf(dm),T=alphaOf(th),N=alphaOf(tn),gt=0,gc=0,nt=0,ni=0;
+    for(var i=3;i<G.length;i+=4){
+      if(G[i]>128){gt++;if(T[i]>0)gc++;}
+      if(N[i]>0){nt++;if(D[i]>0)ni++;}
+    }
+    var cov=gt?gc/gt:0,prec=nt?ni/nt:0,fillr=gt?nt/gt:0,st=0;
+    if(cov>=0.72&&prec>=0.75)st=3;else if(cov>=0.58&&prec>=0.6)st=2;else if(cov>=0.42&&prec>=0.45)st=1;
+    var fillTooMuch=fillr>0.85;if(fillTooMuch&&st>1)st=1;
+    var m=fillTooMuch?'अक्षर रंगवू नका, फक्त रेषेवरून गिरवा.':st===3?'वा! खूप छान गिरवले!':st===2?'छान! थोडे अजून नीट गिरवा.':st===1?'चांगला प्रयत्न! अक्षरावरून पुन्हा गिरवा.':'पुन्हा प्रयत्न करा. अक्षराच्या रेषेवरून गिरवा.';
+    S.res={t:st>=2?'ok':'no',m:m,stars:st,cov:cov,prec:prec};
+    if(st)saveProg('l|'+(S.les.no)+'|w|'+text,st);
+    var w=el('mkWR');if(w)w.innerHTML='<div class="mk-res '+S.res.t+'">'+esc(m)+(st?'<br>'+stars(st):'')+'<br><small style="font-weight:700">अचूकता: '+num(Math.round(cov*100))+'% • रेषेवर: '+num(Math.round(prec*100))+'%</small></div>';
+    window.__mkLast={cov:cov,prec:prec,fillr:fillr,st:st};
+  };
+  if(window.speechSynthesis&&speechSynthesis.getVoices)speechSynthesis.getVoices();
+})();
+</script>
+<script>openMulakshar_();</script></body></html>
