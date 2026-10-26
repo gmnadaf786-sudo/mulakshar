@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade 1 English – Action Fun</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Baloo 2","Comic Sans MS","Segoe UI",system-ui,sans-serif;background:linear-gradient(#e0f2fe,#fef9c3);color:#1f2937;min-height:100vh}
+#app{max-width:560px;margin:0 auto;padding-bottom:30px}
+.hd{background:#7c3aed;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.hd h1{margin:0;flex:1;font-size:21px;line-height:1.2}
+.hd button{border:0;background:rgba(255,255,255,.25);color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;font-weight:900}
+.card{margin:12px 14px;padding:16px;border-radius:22px;background:#fff;box-shadow:0 3px 12px rgba(0,0,0,.14);text-align:center}
+.menu{display:flex;align-items:center;gap:12px;width:calc(100% - 28px);margin:10px 14px;padding:14px;border:0;border-radius:22px;color:#fff;font-size:21px;font-weight:800;text-align:left;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.menu small{display:block;font-size:13px;font-weight:600;opacity:.92;margin-top:2px}
+.menu .e{font-size:38px}
+.m1{background:#ef4444}.m2{background:#8b5cf6}.m3{background:#16a34a}.m4{background:#0ea5e9}
+.stage{position:relative;margin:8px auto 0;width:260px;height:300px;border-radius:24px;background:linear-gradient(#bae6fd 0 72%,#86efac 72%);overflow:hidden}
+.stage svg{width:100%;height:100%}
+.ov{position:absolute;right:10px;top:10px;font-size:44px}
+.say{position:absolute;left:0;right:0;bottom:6px;font-size:22px;font-weight:900;color:#be123c;opacity:0}
+.say.on{animation:pop .5s infinite alternate}
+@keyframes pop{to{transform:scale(1.18)}}
+.big{font-size:30px;font-weight:900;margin:10px 0 2px;color:#1e3a8a}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.b{border:0;border-radius:18px;padding:13px 18px;font-size:18px;font-weight:800;color:#fff;background:#2563eb;font-family:inherit}
+.b.g{background:#16a34a}.b.r{background:#dc2626}.b.o{background:#ea580c}.b.p{background:#9333ea}.b.x{background:#e5e7eb;color:#374151}
+.b.rec{animation:pop .6s infinite alternate}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 10px}
+.chips button{border:2px solid #c4b5fd;background:#fff;border-radius:14px;padding:7px 11px;font-size:15px;font-weight:700;color:#5b21b6;font-family:inherit}
+.chips button.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.res{margin:8px 14px;padding:10px;border-radius:14px;text-align:center;font-weight:800;font-size:17px}
+.res.ok{background:#dcfce7;color:#166534}.res.no{background:#fee2e2;color:#991b1b}.res.info{background:#fef3c7;color:#92400e;font-size:14px}
+.stars{font-size:30px;letter-spacing:3px}
+.ln{padding:8px 12px;margin:5px 0;border-radius:12px;font-size:20px;font-weight:800;color:#6b7280;background:#f3f4f6;transition:.2s}
+.ln.on{background:#fde047;color:#7c2d12;transform:scale(1.04)}
+.clap{font-size:46px;font-weight:900;color:#dc2626}
+.sub{margin:14px 16px 2px;font-weight:900;color:#6d28d9;font-size:14px}
+.q{font-size:60px;margin:0}
+.qs{font-size:26px;font-weight:900;color:#7c2d12}
+/* ---------- character animations ---------- */
+.part{transform-origin:0 0}
+#fig{transform-origin:0 0}
+@keyframes clapL{0%,100%{transform:rotate(32deg)}50%{transform:rotate(-30deg)}}
+@keyframes clapR{0%,100%{transform:rotate(-32deg)}50%{transform:rotate(30deg)}}
+@keyframes stampL{0%,50%,100%{transform:translateY(0)}25%{transform:translateY(-18px)}}
+@keyframes stampR{0%,50%,100%{transform:translateY(0)}75%{transform:translateY(-18px)}}
+@keyframes turn{0%{transform:scaleX(1)}45%,55%{transform:scaleX(-1)}100%{transform:scaleX(1)}}
+@keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-46px)}}
+@keyframes jumpArmL{0%,100%{transform:rotate(15deg)}40%{transform:rotate(165deg)}}
+@keyframes jumpArmR{0%,100%{transform:rotate(-15deg)}40%{transform:rotate(-165deg)}}
+@keyframes upL{from{transform:rotate(10deg)}to{transform:rotate(168deg)}}
+@keyframes upR{from{transform:rotate(-10deg)}to{transform:rotate(-168deg)}}
+@keyframes walkL{0%,100%{transform:rotate(26deg)}50%{transform:rotate(-26deg)}}
+@keyframes walkR{0%,100%{transform:rotate(-26deg)}50%{transform:rotate(26deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes sway{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@keyframes flapL{0%,100%{transform:rotate(30deg)}50%{transform:rotate(100deg)}}
+@keyframes flapR{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(-100deg)}}
+@keyframes swimL{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes swimR{0%{transform:rotate(180deg)}100%{transform:rotate(540deg)}}
+@keyframes bend{0%,100%{transform:rotate(0)}50%{transform:rotate(60deg)}}
+@keyframes slideL{0%,100%{transform:translateX(0)}50%{transform:translateX(-45px)}}
+@keyframes slideR{0%,100%{transform:translateX(0)}50%{transform:translateX(45px)}}
+@keyframes mouth{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1.4)}}
+@keyframes tear{0%{transform:translateY(0);opacity:1}100%{transform:translateY(40px);opacity:0}}
+@keyframes sitDown{from{transform:translateY(0)}to{transform:translateY(48px)}}
+@keyframes sitLegL{from{transform:rotate(0)}to{transform:rotate(80deg)}}
+@keyframes sitLegR{from{transform:rotate(0)}to{transform:rotate(-80deg)}}
+@keyframes pointR{from{transform:rotate(-10deg)}to{transform:rotate(-100deg)}}
+@keyframes note{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(30px,-60px);opacity:0}}
+@keyframes writeA{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(-55deg)}}
+.cap{display:none}
+/* each action => classes */
+.a-clap #aL{animation:clapL .6s infinite ease-in-out}.a-clap #aR{animation:clapR .6s infinite ease-in-out}
+.a-stamp #lL{animation:stampL .8s infinite}.a-stamp #lR{animation:stampR .8s infinite}
+.a-turn #fig{animation:turn 2s infinite ease-in-out}
+.a-jump #fig{animation:jump .9s infinite ease-out}.a-jump #aL{animation:jumpArmL .9s infinite}.a-jump #aR{animation:jumpArmR .9s infinite}
+.a-handsup #aL{animation:upL .8s forwards}.a-handsup #aR{animation:upR .8s forwards}
+.a-straight #fig{animation:none}
+.a-sit #fig{animation:sitDown .8s forwards}.a-sit #lL{animation:sitLegL .8s forwards}.a-sit #lR{animation:sitLegR .8s forwards}
+.a-stand #fig{animation:bob 1s 2}
+.a-left #fig{animation:slideL 1.6s infinite ease-in-out}
+.a-right #fig{animation:slideR 1.6s infinite ease-in-out}
+.a-touch #torso{animation:bend 1.6s infinite ease-in-out}
+.a-point #aR{animation:pointR .8s forwards}
+.a-walk #lL,.a-walk #aR{animation:walkL .8s infinite ease-in-out}.a-walk #lR,.a-walk #aL{animation:walkR .8s infinite ease-in-out}.a-walk #fig{animation:bob .8s infinite}
+.a-stomp #lL,.a-stomp #aR{animation:walkL 1.5s infinite ease-in-out}.a-stomp #lR,.a-stomp #aL{animation:walkR 1.5s infinite ease-in-out}.a-stomp #fig{animation:sway 1.5s infinite}
+.a-run #lL,.a-run #aR{animation:walkL .35s infinite}.a-run #lR,.a-run #aL{animation:walkR .35s infinite}.a-run #fig{animation:bob .35s infinite}
+.a-hop #fig{animation:jump .7s infinite}.a-hop #lL{animation:stampL .7s infinite}
+.a-fly #aL{animation:flapL .5s infinite}.a-fly #aR{animation:flapR .5s infinite}.a-fly #fig{animation:bob 1s infinite}
+.a-swim #aL{animation:swimL 1.4s infinite linear}.a-swim #aR{animation:swimR 1.4s infinite linear}.a-swim #fig{animation:sway 1.4s infinite}
+.a-dance #fig{animation:sway .8s infinite}.a-dance #aL{animation:flapL .8s infinite}.a-dance #aR{animation:flapR .8s infinite .4s}.a-dance #lL{animation:stampL .8s infinite}.a-dance #lR{animation:stampR .8s infinite}
+.a-roar #mouth{animation:mouth .5s infinite}.a-roar #fig{animation:bob .5s infinite}
+.a-bark #mouth{animation:mouth .35s infinite}.a-bark #head{animation:bob .35s infinite}
+.a-sing #mouth{animation:mouth .45s infinite}.a-sing #fig{animation:sway 1.2s infinite}
+.a-cry #tearL,.a-cry #tearR{animation:tear .8s infinite}.a-cry #fig{animation:sway .4s infinite}
+.a-read #aL,.a-read #aR{transform:rotate(0)}
+.a-write #aR{animation:writeA .5s infinite}
+.a-idle #fig{animation:bob 1.2s infinite}
+#tearL,#tearR,#notes,#book,#pencil{opacity:0}
+.a-cry #tearL,.a-cry #tearR{opacity:1}
+.a-sing #notes,.a-bark #notes{opacity:1}.a-sing #notes text{animation:note 1.4s infinite}.a-sing #notes text:nth-child(2){animation-delay:.5s}
+.a-read #book{opacity:1}.a-write #pencil{opacity:1}
+</style></head><body><div id="app"></div>
+<script>
+(function(){
+var A={ /* key:[text, animClass, overlay emoji, shout, sfx] */
+ clap:['Clap your hands','clap','','','clap'],stamp:['Stamp your feet','stamp','','','thud'],turn:['Turn around','turn'],jump:['Jump up high','jump','','','thud'],
+ stand:['Stand up','stand'],sit:['Sit down','sit'],left:['Turn left','left','⬅️'],right:['Turn right','right','➡️'],handsup:['Hands up','handsup'],straight:['Stand straight','straight'],
+ touch:['Touch the ground','touch','👇'],point:['Point to the board','point','📋'],
+ walkold:['Walk like an old man','walk','👴'],walkele:['Walk like an elephant','stomp','🐘','','thud'],hop:['Hop like a frog','hop','🐸','','thud'],run:['Run like a horse','run','🐴'],
+ cry:['Cry like a baby','cry','👶','Wah! Wah!'],bark:['Bark like a dog','bark','🐶','Bow-wow!'],fly:['Fly like a bird','fly','🐦'],roar:['Roar like a lion','roar','🦁','ROAR!'],
+ swim:['Swim','swim','🏊'],sing:['Sing','sing','🎤'],play:['Play','jump','⚽'],walk:['Walk','walk'],read:['Read','read','📖'],jump2:['Jump','jump'],write:['Write','write','✏️'],dance:['Dance','dance','💃']
+};
+var GROUPS=[
+ {id:'do',t:'Let us do',m:'चला करूया',c:'m3',e:'🧍',k:['stand','sit','left','right','handsup','straight']},
+ {id:'can',t:'I can ...',m:'मी करू शकतो',c:'m4',e:'🏊',k:['swim','sing','play','walk','read','jump2','write','dance']},
+ {id:'queen',t:'Do as Queen says',m:'राणी म्हणते तसे करा',c:'m2',e:'👑',k:['walkold','walkele','hop','run','cry','bark','fly','roar']},
+ {id:'more',t:'Move your body',m:'शरीराच्या हालचाली',c:'m1',e:'🕺',k:['clap','stamp','turn','jump','touch','point']}
+];
+var SONG=[
+ [['Clap your hands,','clap'],['Clap your hands,','clap'],['Listen to the music','idle'],['And clap your hands.','clap']],
+ [['Stamp your feet,','stamp'],['Stamp your feet,','stamp'],['Listen to the music','idle'],['And stamp your feet.','stamp']],
+ [['Turn around,','turn'],['Turn around,','turn'],['Listen to the music','idle'],['And turn around.','turn']],
+ [['Jump up high,','jump'],['Jump up high,','jump'],['Listen to the music','idle'],['And jump up high.','jump']],
+ [['Clap your hands,','clap'],['Clap your hands,','clap'],['Listen to the music','idle'],['And clap your hands.','clap']]
+];
+var LS='en_action1';
+function prog(){try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch(e){return {}}}
+function save(k,v){try{var p=prog();if((p[k]||0)<v){p[k]=v;localStorage.setItem(LS,JSON.stringify(p))}}catch(e){}}
+function el(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* ---------- character SVG ---------- */
+function fig(){return '<svg viewBox="-130 0 260 300" id="svg">'+
+'<ellipse cx="0" cy="288" rx="62" ry="9" fill="rgba(0,0,0,.18)"/>'+
+'<g id="fig"><g id="torso">'+
+ '<g transform="translate(-16,176)"><g class="part" id="lL"><rect x="-11" y="0" width="22" height="82" rx="11" fill="#2563eb"/><ellipse cx="-3" cy="86" rx="18" ry="9" fill="#7c2d12"/></g></g>'+
+ '<g transform="translate(16,176)"><g class="part" id="lR"><rect x="-11" y="0" width="22" height="82" rx="11" fill="#2563eb"/><ellipse cx="3" cy="86" rx="18" ry="9" fill="#7c2d12"/></g></g>'+
+ '<rect x="-36" y="104" width="72" height="84" rx="26" fill="#f59e0b"/><rect x="-6" y="104" width="12" height="20" fill="#fde68a"/>'+
+ '<g transform="translate(-38,118)"><g class="part" id="aL"><rect x="-9" y="0" width="18" height="64" rx="9" fill="#f59e0b"/><circle cx="0" cy="68" r="11" fill="#ffd8a8"/></g></g>'+
+ '<g transform="translate(38,118)"><g class="part" id="aR"><rect x="-9" y="0" width="18" height="64" rx="9" fill="#f59e0b"/><circle cx="0" cy="68" r="11" fill="#ffd8a8"/><g id="pencil" transform="translate(0,70) rotate(40)"><rect x="-3" y="-4" width="6" height="26" fill="#facc15"/><polygon points="-3,22 3,22 0,30" fill="#78350f"/></g></g></g>'+
+ '<g id="book" transform="translate(0,150)"><rect x="-24" y="-16" width="48" height="34" rx="4" fill="#ef4444"/><rect x="-21" y="-13" width="19" height="28" fill="#fff"/><rect x="2" y="-13" width="19" height="28" fill="#fff"/></g>'+
+ '<g id="head"><circle cx="0" cy="66" r="40" fill="#ffd8a8"/><path d="M-41 62 Q-38 22 0 24 Q38 22 41 62 Q28 40 0 42 Q-28 40 -41 62Z" fill="#1f2937"/>'+
+ '<circle cx="-14" cy="66" r="5.5" fill="#1f2937"/><circle cx="14" cy="66" r="5.5" fill="#1f2937"/><circle cx="-12" cy="64" r="1.8" fill="#fff"/><circle cx="16" cy="64" r="1.8" fill="#fff"/>'+
+ '<circle cx="-26" cy="80" r="6" fill="#fca5a5"/><circle cx="26" cy="80" r="6" fill="#fca5a5"/>'+
+ '<g transform="translate(0,86)"><ellipse id="mouth" class="part" cx="0" cy="0" rx="9" ry="6" fill="#9f1239" style="transform-origin:0 0"/></g>'+
+ '<g id="tearL"><circle cx="-14" cy="78" r="4" fill="#38bdf8"/></g><g id="tearR"><circle cx="14" cy="78" r="4" fill="#38bdf8"/></g></g>'+
+'</g>'+
+'<g id="notes" fill="#7c3aed" font-size="28" font-weight="900"><text x="55" y="50">♪</text><text x="-70" y="60">♫</text></g></g></svg>';}
+var S={view:'home',g:null,i:0,res:null,rec:false,sound:true,song:{on:false,line:-1}};
+var curAct='straight',shoutTimer=null,sfxTimer=null;
+function setAct(k){
+  var a=A[k]||A.straight,svg=el('stage');if(!svg)return;curAct=k;
+  svg.className='stage a-'+a[1];
+  var o=el('ov');if(o)o.textContent=a[2]||'';
+  var sh=el('say');if(sh){sh.textContent=a[3]||'';sh.className='say'+(a[3]?' on':'');}
+  clearInterval(sfxTimer);
+  if(S.sound&&a[4])sfxTimer=setInterval(function(){sfx(a[4])},a[1]==='clap'?600:800);
+}
+function stageHtml(){return '<div class="stage a-straight" id="stage">'+fig()+'<div class="ov" id="ov"></div><div class="say" id="say"></div></div>';}
+/* ---------- sound ---------- */
+var AC=null;
+function ac(){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();}catch(e){}return AC;}
+function sfx(t){var c=ac();if(!c)return;var n=c.currentTime;
+  if(t==='clap'){var b=c.createBuffer(1,c.sampleRate*0.08,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+    var s=c.createBufferSource();s.buffer=b;var f=c.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;var g=c.createGain();g.gain.value=.9;s.connect(f);f.connect(g);g.connect(c.destination);s.start(n);}
+  else if(t==='thud'){var o=c.createOscillator(),g=c.createGain();o.frequency.setValueAtTime(140,n);o.frequency.exponentialRampToValueAtTime(45,n+.18);g.gain.setValueAtTime(.8,n);g.gain.exponentialRampToValueAtTime(.001,n+.2);o.connect(g);g.connect(c.destination);o.start(n);o.stop(n+.22);}
+  else if(t==='ok'){[660,880,1100].forEach(function(f,i){var o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.setValueAtTime(.25,n+i*.1);g.gain.exponentialRampToValueAtTime(.001,n+i*.1+.18);o.connect(g);g.connect(c.destination);o.start(n+i*.1);o.stop(n+i*.1+.2);});}
+}
+/* ---------- speech ---------- */
+function voice(){var vs=speechSynthesis.getVoices()||[];return vs.filter(function(x){return /^en-IN/i.test(x.lang)})[0]||vs.filter(function(x){return /^en/i.test(x.lang)})[0];}
+function speak(t,cb){
+  try{if(!window.speechSynthesis){if(cb)setTimeout(cb,1200);return;}speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='en-IN';u.rate=.85;var v=voice();if(v){u.voice=v;u.lang=v.lang}
+    var done=false;function fin(){if(done)return;done=true;if(cb)cb();}u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);setTimeout(fin,Math.max(2500,t.length*140));}catch(e){if(cb)setTimeout(cb,1200);}
+}
+function norm(s){return String(s||'').toLowerCase().replace(/[^a-z ]/g,' ').replace(/\s+/g,' ').trim();}
+function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++)d[i]=[i];for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function sim(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;return 1-lev(a,b)/Math.max(a.length,b.length);}
+function judge(target,alts){var a3=alts.slice(0,3),t=norm(target);
+  for(var i=0;i<a3.length;i++)if(norm(a3[i])===t)return {ok:true,stars:3};
+  var best=sim(a3[0]||'',t);return best>=0.86?{ok:true,stars:2}:{ok:false,stars:0};}
+function listen(target,done){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){done({t:'info',m:'Mic check not available here. Teacher can decide.',manual:true});return;}
+  var r=new SR();r.lang='en-IN';r.interimResults=false;r.maxAlternatives=5;var fin=false;
+  function f(x){if(fin)return;fin=true;done(x);}
+  r.onresult=function(e){var alts=[];for(var i=0;i<e.results.length;i++)for(var j=0;j<e.results[i].length;j++)alts.push(e.results[i][j].transcript);
+    var j=judge(target,alts);f(j.ok?{t:'ok',m:'Correct!',stars:j.stars,heard:alts[0]}:{t:'no',m:'Try again',heard:alts[0],manual:true});if(j.ok)sfx('ok');};
+  r.onerror=function(e){f({t:'info',m:(e.error==='not-allowed'||e.error==='service-not-allowed')?'Mic not allowed. Allow the microphone in the browser.':(e.error==='no-speech'?'Did not hear you. Try again.':'Mic error ('+e.error+')'),manual:true});};
+  r.onend=function(){f({t:'info',m:'Did not hear you. Try again.',manual:true});};
+  try{r.start();}catch(e){f({t:'info',m:'Could not start the mic.',manual:true});}
+}
+/* ---------- clap detector (microphone) ---------- */
+var CL={on:false,n:0,ctx:null,stream:null,raf:0};
+function clapStart(cb){
+  if(CL.on)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){cb(-1);return;}
+  navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}}).then(function(st){
+    CL.stream=st;CL.ctx=new (window.AudioContext||window.webkitAudioContext)();var src=CL.ctx.createMediaStreamSource(st),an=CL.ctx.createAnalyser();an.fftSize=1024;src.connect(an);
+    var buf=new Float32Array(an.fftSize),avg=0.01,last=0;CL.on=true;CL.n=0;
+    (function loop(){if(!CL.on)return;an.getFloatTimeDomainData(buf);var s=0;for(var i=0;i<buf.length;i++)s+=buf[i]*buf[i];var rms=Math.sqrt(s/buf.length),now=performance.now();
+      if(rms>Math.max(0.1,avg*4.5)&&now-last>230){last=now;CL.n++;cb(CL.n);}
+      avg=avg*0.96+rms*0.04;CL.raf=requestAnimationFrame(loop);})();
+    cb(0);
+  }).catch(function(){cb(-2);});
+}
+function clapStop(){CL.on=false;cancelAnimationFrame(CL.raf);try{if(CL.stream)CL.stream.getTracks().forEach(function(t){t.stop()});if(CL.ctx)CL.ctx.close();}catch(e){}CL.stream=null;}
+/* ---------- render ---------- */
+function head(t,back){return '<div class="hd">'+(back?'<button type="button" onclick="enBack()">‹</button>':'')+'<h1>'+t+'</h1><button type="button" onclick="enSound()" title="sound">'+(S.sound?'🔊':'🔇')+'</button></div>';}
+function render(){
+  var a=el('app'),h='';stopAll(true);
+  if(S.view==='home'){
+    h=head('Grade 1 English<br><small style="font-weight:600;font-size:13px">Action fun • इयत्ता १ ली</small>',false);
+    GROUPS.forEach(function(g,i){h+='<button type="button" class="menu '+g.c+'" onclick="enGroup('+i+')"><span class="e">'+g.e+'</span><span>'+g.t+'<small>'+g.m+' • '+g.k.length+' actions</small></span></button>';});
+    h+='<button type="button" class="menu m1" style="background:#f59e0b" onclick="enSongView()"><span class="e">🎵</span><span>Song: Clap your hands<small>गाणे गा आणि कृती करा • टाळी मोजणारे</small></span></button>';
+  }else if(S.view==='act'){
+    var g=GROUPS[S.g],k=g.k[S.i],x=A[k];
+    h=head(g.t,true)+'<div class="card">'+stageHtml()+'<div class="big">'+esc(x[0])+'</div>'+
+     '<div class="row"><button class="b" type="button" onclick="enSay()">🔊 Listen</button><button class="b p" type="button" onclick="enDo()">▶ Show</button><button class="b r'+(S.rec?' rec':'')+'" type="button" onclick="enMic()">'+(S.rec?'🎤 Listening...':'🎤 Say it')+'</button></div>';
+    if(k==='clap')h+='<div class="row"><button class="b o" type="button" onclick="enClapTry()">'+(CL.on?'⏹ Stop':'👏 Clap with me')+'</button></div><div id="clapbox" class="clap">'+(CL.on?'👏 '+CL.n:'')+'</div>';
+    if(S.res)h+='<div class="res '+S.res.t+'">'+(S.res.t==='ok'?'✅ ':S.res.t==='no'?'🔁 ':'ℹ️ ')+esc(S.res.m)+(S.res.stars?'<div class="stars">'+'⭐'.repeat(S.res.stars)+'</div>':'')+(S.res.heard?'<br><small>Heard: '+esc(S.res.heard)+'</small>':'')+'</div>'+(S.res.manual?'<div class="row"><button class="b g" type="button" onclick="enManual(true)">✔ Did it right</button><button class="b x" type="button" onclick="enManual(false)">✖ Again</button></div>':'');
+    h+='</div><div class="row"><button class="b x" type="button" onclick="enGo(-1)"'+(S.i===0?' disabled':'')+'>‹ Back</button><button class="b" type="button" onclick="enGo(1)"'+(S.i>=g.k.length-1?' disabled':'')+'>Next ›</button></div>';
+    if(S.g===2)h+='<div class="row"><button class="b p" type="button" onclick="enQueen()">👑 Play "Queen says" game</button></div>';
+    h+='<div class="chips">'+g.k.map(function(c,i){var d=prog()[c];return '<button type="button" class="'+(i===S.i?'on':'')+'" onclick="enJump('+i+')">'+(d?'⭐ ':'')+esc(A[c][0])+'</button>';}).join('')+'</div>';
+  }else if(S.view==='song'){
+    h=head('Clap your hands',true)+'<div class="card">'+stageHtml()+'<div class="row"><button class="b g" id="songbtn" type="button" onclick="enSongPlay()">▶ Sing along</button><button class="b o" type="button" onclick="enClapTry()">'+(CL.on?'⏹ Stop clap mic':'👏 Count my claps')+'</button></div><div id="clapbox" class="clap">'+(CL.on?'👏 '+CL.n:'')+'</div><div style="text-align:left;margin-top:6px;max-height:230px;overflow-y:auto;position:relative" id="lines">';
+    SONG.forEach(function(v,vi){v.forEach(function(l,li){h+='<div class="ln" id="ln'+vi+'_'+li+'">'+esc(l[0])+'</div>';});h+='<div style="height:6px"></div>';});
+    h+='</div></div>';
+  }else if(S.view==='queen'){
+    h=head('👑 Queen says',true)+queenHtml();
+  }
+  a.innerHTML=h;
+  if(el('stage')){setAct(S.view==='act'?GROUPS[S.g].k[S.i]:'straight');}
+}
+/* ---------- Queen says game ---------- */
+var Q={n:0,sc:0,order:[],qs:true,shown:false,ans:null};
+function queenStart(){var ks=GROUPS[2].k.concat(['clap','stamp','jump','turn']),o=[];ks.sort(function(){return Math.random()-.5});for(var i=0;i<8;i++)o.push({k:ks[i],q:Math.random()<0.7});Q.order=o;Q.n=0;Q.sc=0;Q.ans=null;}
+function queenHtml(){
+  if(Q.n>=Q.order.length){var st=Q.sc>=Q.order.length?3:Q.sc>=Q.order.length*0.7?2:1;save('queen',st);return '<div class="card"><p class="q">🏆</p><div class="big">'+Q.sc+' / '+Q.order.length+'</div><div class="stars">'+'⭐'.repeat(st)+'</div><div class="row"><button class="b g" type="button" onclick="enQueen()">🔁 Play again</button></div></div>';}
+  var r=Q.order[Q.n],x=A[r.k],txt=(r.q?'Queen says, ':'')+x[0].toLowerCase().replace(/^./,function(c){return r.q?c:c.toUpperCase()});
+  var h='<div class="card"><div class="qs">'+(r.q?'👑 ':'🚫 ')+esc((r.q?'Queen says: ':'')+x[0])+'</div>'+stageHtml()+
+   '<div class="row"><button class="b" type="button" onclick="enQSay()">🔊 Listen</button></div>';
+  if(Q.ans===null)h+='<div class="row"><button class="b g" type="button" onclick="enQAns(true)">✅ Do it!</button><button class="b r" type="button" onclick="enQAns(false)">✋ Stay still</button></div>';
+  else h+='<div class="res '+(Q.ans.ok?'ok':'no')+'">'+(Q.ans.ok?'✅ Correct! ':'🔁 ')+(r.q?'Queen said it, so do it!':'Queen did NOT say it, so stay still!')+'</div><div class="row"><button class="b" type="button" onclick="enQNext()">Next ›</button></div>';
+  return h+'</div><div class="res info">Question '+(Q.n+1)+' of '+Q.order.length+' • Do the action only when "Queen says"!</div>';
+}
+window.enQueen=function(){S.view='queen';queenStart();render();setTimeout(queenPlay,300);};
+function queenPlay(){var r=Q.order[Q.n];if(!r)return;setAct(r.k);speak((r.q?'Queen says, ':'')+A[r.k][0]);}
+window.enQSay=function(){var r=Q.order[Q.n];speak((r.q?'Queen says, ':'')+A[r.k][0]);setAct(r.k);};
+window.enQAns=function(d){var r=Q.order[Q.n],ok=(d===r.q);Q.ans={ok:ok};if(ok){Q.sc++;sfx('ok');}stopAct=0;render2();};
+function render2(){var a=el('app');a.innerHTML=head('👑 Queen says',true)+queenHtml();var r=Q.order[Q.n];if(r&&el('stage')){var x=A[r.k];setAct(Q.ans&&Q.ans.ok!==undefined&&!r.q?'straight':r.k);}}
+window.enQNext=function(){Q.n++;Q.ans=null;render2();setTimeout(queenPlay,300);};
+/* ---------- handlers ---------- */
+var stopAct=0;
+function stopAll(soft){try{if(window.speechSynthesis)speechSynthesis.cancel();}catch(e){}clearInterval(sfxTimer);S.song.on=false;S.rec=false;if(CL.on)clapStop();}
+window.enBack=function(){stopAll();if(S.view==='act'||S.view==='song'||S.view==='queen'){S.view='home';S.res=null;render();}};
+window.enSound=function(){S.sound=!S.sound;if(!S.sound)clearInterval(sfxTimer);var b=document.querySelector('.hd button:last-child');if(b)b.textContent=S.sound?'🔊':'🔇';};
+window.enGroup=function(i){S.view='act';S.g=i;S.i=0;S.res=null;render();setTimeout(enDo,250);};
+window.enSongView=function(){S.view='song';render();};
+window.enGo=function(d){var g=GROUPS[S.g];S.i=Math.max(0,Math.min(g.k.length-1,S.i+d));S.res=null;render();setTimeout(enDo,200);};
+window.enJump=function(i){S.i=i;S.res=null;render();setTimeout(enDo,200);};
+window.enDo=function(){var k=GROUPS[S.g].k[S.i];ac();setAct('straight');setTimeout(function(){setAct(k)},50);speak(A[k][0]);};
+window.enSay=function(){speak(A[GROUPS[S.g].k[S.i]][0]);};
+window.enMic=function(){if(S.rec)return;var k=GROUPS[S.g].k[S.i];S.rec=true;S.res=null;render();
+  listen(A[k][0],function(r){S.rec=false;S.res=r;if(r.t==='ok')save(k,r.stars);render();setAct(k);});};
+window.enManual=function(ok){var k=GROUPS[S.g].k[S.i];if(ok){save(k,3);sfx('ok');S.res={t:'ok',m:'Correct! (teacher checked)',stars:3};}else S.res=null;render();setAct(k);};
+function clapUi(n){var b=el('clapbox');if(!b)return;if(n===-1){b.textContent='This browser cannot use the mic.';return;}if(n===-2){b.textContent='Mic not allowed. Allow the microphone.';CL.on=false;return;}
+  b.textContent=n?'👏 '+n+(n>=5?' ⭐':''):'👏 Clap now!';if(n===5){sfx('ok');save('clap',3);}if(n>0){var s=el('stage');if(s){s.classList.add('a-clap');setTimeout(function(){if(S.view!=='song'||!S.song.on)s&&S.view==='act'&&setAct(curAct)},350);}}}
+window.enClapTry=function(){if(CL.on){clapStop();render();return;}ac();clapStart(function(n){clapUi(n);});var b=el('clapbox');if(b)b.textContent='👏 Clap now!';setTimeout(function(){var bt=document.querySelector('.b.o');if(bt&&CL.on)bt.textContent='⏹ Stop';},300);};
+window.enSongPlay=function(){
+  var sb=el('songbtn');
+  if(S.song.on){S.song.on=false;try{speechSynthesis.cancel()}catch(e){}if(sb)sb.textContent='▶ Sing along';setAct('straight');return;}
+  ac();S.song.on=true;if(sb)sb.textContent='⏹ Stop';var seq=[];SONG.forEach(function(v,vi){v.forEach(function(l,li){seq.push([vi,li,l[0],l[1]]);});});
+  var idx=0;(function next(){if(!S.song.on||idx>=seq.length){S.song.on=false;var sb2=el('songbtn');if(sb2)sb2.textContent='▶ Sing along';setAct('straight');if(idx>=seq.length){sfx('ok');save('song',3);}return;}
+    var s=seq[idx++];document.querySelectorAll('.ln.on').forEach(function(n){n.classList.remove('on')});var ln=el('ln'+s[0]+'_'+s[1]);if(ln){ln.classList.add('on');var bx=el('lines');if(bx)bx.scrollTop=Math.max(0,ln.offsetTop-80);}
+    setAct(s[3]==='idle'?'sing':s[3]);speak(s[2],function(){setTimeout(next,250);});})();
+};
+window.__EN={A:A,setAct:setAct};
+if(window.speechSynthesis&&speechSynthesis.getVoices)speechSynthesis.getVoices();
+render();
+})();
+</script></body></html>
